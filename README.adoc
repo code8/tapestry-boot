@@ -1,0 +1,3 @@
+Mark main tapestry application module with @TapestryApplication annotation.
+
+See DemoApplicationTests.
