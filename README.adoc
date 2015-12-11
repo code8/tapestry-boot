@@ -1,3 +1,9 @@
-Mark main tapestry application module with @TapestryApplication annotation.
+The *tapestry-boot* library implements following features:
+[square]
+* bootstraps *tapestry framework* inside embedded servlet container managed by *spring-boot*
+* provides injection of spring-services into tapestry-services
+* provides injection of tapestry-services into spring-services
+
+To use *tapestry-boot* simple marks tapestry application module with @TapestryApplication annotation.
 
 See DemoApplicationTests.
