@@ -58,7 +58,7 @@ public class TapestryBeanFactoryPostProcessor implements BeanFactoryPostProcesso
             this.applicationContext = (ConfigurableWebApplicationContext) applicationContext;
             applicationContext.addBeanFactoryPostProcessor(this);
         } else {
-            throw new RuntimeException("tapestry-spring-boot works only with ConfigurableWebApplicationContext");
+            throw new RuntimeException("tapestry-spring-boot works only with EmbeddedWebApplicationContext (Supplied context class was" + applicationContext.getClass() + ")");
         }
     }
 
