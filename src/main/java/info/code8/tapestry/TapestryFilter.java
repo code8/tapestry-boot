@@ -55,7 +55,10 @@ public class TapestryFilter extends FilterRegistrationBean implements Filter {
             boolean handled = handler.service((HttpServletRequest) request, (HttpServletResponse) response);
 
             if (!handled) {
+                logger.debug("Tapestry did not handle the request.. continuing with filter chain");
                 chain.doFilter(request, response);
+            } else {
+                logger.debug("Tapestry handled the request.. stop the filter chain");
             }
 
         } finally {
