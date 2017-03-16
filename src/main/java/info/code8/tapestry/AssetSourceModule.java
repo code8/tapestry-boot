@@ -1,13 +1,13 @@
 package info.code8.tapestry;
 
+import java.util.Locale;
+
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.ioc.Resource;
 import org.apache.tapestry5.ioc.annotations.Decorate;
 import org.apache.tapestry5.ioc.services.SymbolSource;
 import org.apache.tapestry5.services.AssetSource;
-
-import java.util.Locale;
 
 /**
  * Created by code8 on 11/9/15.

@@ -13,10 +13,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
-import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -31,7 +31,7 @@ import code8.tapestry.services.SomeInterface;
 public class DemoApplicationTests {
 
     @Autowired
-    private EmbeddedWebApplicationContext server;
+    private AnnotationConfigServletWebServerApplicationContext server;
 
     @LocalServerPort
     private int port;
@@ -50,6 +50,7 @@ public class DemoApplicationTests {
 
 	@Test
 	public void contextLoads() {
+	    assertNotNull(server);
 		assertNotNull(applicationContext);
 	}
 

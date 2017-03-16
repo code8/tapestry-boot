@@ -2,7 +2,7 @@ package info.code8.tapestry;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
@@ -14,12 +14,12 @@ public class TapestryApplicationContextinitializer
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext) {
-        if (applicationContext instanceof EmbeddedWebApplicationContext) {
+        if (applicationContext instanceof AnnotationConfigServletWebServerApplicationContext) {
             if (tapestryBeanFactoryPostProcessor != null) {
                 throw new RuntimeException("T applicationContext already set");
             }
             tapestryBeanFactoryPostProcessor = new TapestryBeanFactoryPostProcessor(
-                    (EmbeddedWebApplicationContext) applicationContext);
+                    (AnnotationConfigServletWebServerApplicationContext) applicationContext);
             applicationContext.addBeanFactoryPostProcessor(tapestryBeanFactoryPostProcessor);
         } else {
             logger.warn("TB: tapestry-spring-boot works only with EmbeddedWebApplicationContext (Supplied context class was"

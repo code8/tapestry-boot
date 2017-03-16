@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
  * Created by code8 on 11/8/15.
  */
 @Component
-public class TapestryFilter extends FilterRegistrationBean implements Filter {
+public class TapestryFilter extends FilterRegistrationBean<TapestryFilter> implements Filter {
     private final Logger logger = LoggerFactory.getLogger(TapestryFilter.class);
 
     private FilterConfig config;
@@ -72,7 +72,7 @@ public class TapestryFilter extends FilterRegistrationBean implements Filter {
     }
 
     @Override
-    public Filter getFilter() {
+    public TapestryFilter getFilter() {
         return this;
     }
 }

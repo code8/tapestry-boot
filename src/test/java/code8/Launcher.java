@@ -1,5 +1,6 @@
 package code8;
 
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
@@ -10,7 +11,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class Launcher {
     public static void main(String[] args) {
         new SpringApplicationBuilder(Launcher.class)
-                .web(true)
+                .web(WebApplicationType.SERVLET)
                 .run(args);
     }
 }

@@ -24,7 +24,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
+import org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -42,11 +42,11 @@ public class TapestryBeanFactoryPostProcessor
         implements BeanFactoryPostProcessor, Ordered {
 
     private static final Logger logger = LoggerFactory.getLogger(TapestryBeanFactoryPostProcessor.class);
-    protected final EmbeddedWebApplicationContext applicationContext;
+    protected final AnnotationConfigServletWebServerApplicationContext applicationContext;
     private Registry registry = null;
     private TapestryAppInitializer appInitializer = null;
 
-    public TapestryBeanFactoryPostProcessor(EmbeddedWebApplicationContext applicationContext) {
+    public TapestryBeanFactoryPostProcessor(AnnotationConfigServletWebServerApplicationContext applicationContext) {
         super();
         this.applicationContext = applicationContext;
     }
@@ -110,7 +110,7 @@ public class TapestryBeanFactoryPostProcessor
 
         tapestryContext.put("tapestry.filter-name", filterName);
 
-        String servletContextPath = environment.getProperty(SymbolConstants.CONTEXT_PATH, "");
+        String servletContextPath = environment.getProperty("server.context-path", "");
         tapestryContext.put(SymbolConstants.CONTEXT_PATH, servletContextPath);
 
         String executionMode = environment.getProperty(SymbolConstants.EXECUTION_MODE, "production");
