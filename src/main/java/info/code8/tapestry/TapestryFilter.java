@@ -1,18 +1,25 @@
 package info.code8.tapestry;
 
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.tapestry5.ioc.Registry;
 import org.apache.tapestry5.services.HttpServletRequestHandler;
 import org.apache.tapestry5.services.ServletApplicationInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.stereotype.Component;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Created by code8 on 11/8/15.
@@ -48,7 +55,10 @@ public class TapestryFilter extends FilterRegistrationBean implements Filter {
             boolean handled = handler.service((HttpServletRequest) request, (HttpServletResponse) response);
 
             if (!handled) {
+                logger.debug("Tapestry did not handle the request.. continuing with filter chain");
                 chain.doFilter(request, response);
+            } else {
+                logger.debug("Tapestry handled the request.. stop the filter chain");
             }
 
         } finally {
@@ -62,7 +72,7 @@ public class TapestryFilter extends FilterRegistrationBean implements Filter {
     }
 
     @Override
-    protected Filter getFilter() {
+    public Filter getFilter() {
         return this;
     }
 }
