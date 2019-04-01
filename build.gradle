@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '2.0.4.RELEASE'
+        springBootVersion = '2.0.8.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -16,8 +16,8 @@ group = "info.code8"
 version = "0.1.0-SNAPSHOT"
 ext {
     versions =  [
-            spring:     '5.0.8.RELEASE',
-            boot:       '2.0.4.RELEASE',
+            spring:     '5.0.12.RELEASE',
+            boot:       '2.0.8.RELEASE',
             tapestry:   '5.4.3',
             junit:      '4.12'
     ]
