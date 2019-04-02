@@ -1,13 +1,13 @@
 package info.code8.tapestry;
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.apache.tapestry5.ioc.ObjectCreator;
 import org.apache.tapestry5.ioc.ScopeConstants;
 import org.apache.tapestry5.ioc.ServiceBuilderResources;
 import org.apache.tapestry5.ioc.def.ServiceDef2;
 import org.springframework.context.ApplicationContext;
-
-import java.util.Collections;
-import java.util.Set;
 
 /**
  * Created by code8 on 11/8/15.
@@ -30,6 +30,7 @@ public class SpringBeanServiceDef implements ServiceDef2
         return true;
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public ObjectCreator createServiceCreator(ServiceBuilderResources resources)
     {
@@ -55,11 +56,13 @@ public class SpringBeanServiceDef implements ServiceDef2
         return beanName;
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public Set<Class> getMarkers() {
         return Collections.emptySet();
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public Class getServiceInterface() {
         return context.getType(beanName);

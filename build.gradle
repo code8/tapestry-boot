@@ -1,12 +1,12 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.3.RELEASE'
+        springBootVersion = '2.0.8.RELEASE'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
         classpath "se.transmode.gradle:gradle-docker:1.2"
     }
 }
@@ -16,24 +16,29 @@ group = "info.code8"
 version = "0.1.0-SNAPSHOT"
 ext {
     versions =  [
-            spring:     '4.3.5.RELEASE',
-            boot:       '1.4.3.RELEASE',
-            tapestry:   '5.4.1',
+            spring:     '5.0.12.RELEASE',
+            boot:       '2.0.8.RELEASE',
+            tapestry:   '5.4.3',
             junit:      '4.12'
     ]
 }
 
 apply plugin: 'java'
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'maven'
 
 jar {
     baseName = 'tapestry-boot'
+    archivesBaseName = 'tapestry-boot'
     manifest { attributes 'Tapestry-Module-Classes': 'info.code8.tapestry.AssetSourceModule' }
+    // Set true if only jar package and not spring boot executable jar
+    enabled = true
 }
 
-bootRepackage {
+bootJar {
     // workaround for 'Unable to find main class'
-    mainClass = '...'
+    mainClassName = '...'
 }
 
 task sourceJar(type: Jar) {

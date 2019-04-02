@@ -1,7 +1,17 @@
 package info.code8.tapestry;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.tapestry5.internal.AbstractContributionDef;
-import org.apache.tapestry5.ioc.*;
+import org.apache.tapestry5.ioc.AnnotationProvider;
+import org.apache.tapestry5.ioc.ModuleBuilderSource;
+import org.apache.tapestry5.ioc.ObjectLocator;
+import org.apache.tapestry5.ioc.ObjectProvider;
+import org.apache.tapestry5.ioc.OperationTracker;
+import org.apache.tapestry5.ioc.OrderedConfiguration;
+import org.apache.tapestry5.ioc.ServiceResources;
 import org.apache.tapestry5.ioc.def.ContributionDef;
 import org.apache.tapestry5.ioc.def.DecoratorDef;
 import org.apache.tapestry5.ioc.def.ModuleDef;
@@ -10,10 +20,6 @@ import org.apache.tapestry5.ioc.internal.util.CollectionFactory;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.apache.tapestry5.plastic.PlasticUtils;
 import org.springframework.context.ApplicationContext;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * A wrapper that converts a Spring {@link ApplicationContext} into a set of service definitions,
@@ -39,7 +45,7 @@ public class SpringModuleDef implements ModuleDef {
 
 
     @Override
-    public Class getBuilderClass() {
+    public Class<?> getBuilderClass() {
         return null;
     }
 
@@ -65,14 +71,14 @@ public class SpringModuleDef implements ModuleDef {
 
             @Override
             @SuppressWarnings("unchecked")
-            public void contribute(ModuleBuilderSource moduleSource, ServiceResources resources, OrderedConfiguration configuration) {
+            public void contribute(ModuleBuilderSource moduleSource, ServiceResources resources, @SuppressWarnings("rawtypes") OrderedConfiguration configuration) {
                 final OperationTracker tracker = resources.getTracker();
 
                 final ObjectProvider springBeanProvider = new ObjectProvider() {
                     @Override
                     public <T> T provide(Class<T> objectType, AnnotationProvider annotationProvider, ObjectLocator locator) {
 
-                        Map beanMap = applicationContext.getBeansOfType(objectType);
+                        Map<String, T> beanMap = applicationContext.getBeansOfType(objectType);
 
                         switch (beanMap.size()) {
                             case 0:

@@ -24,7 +24,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.EmbeddedWebApplicationContext;
+import org.springframework.boot.web.context.ConfigurableWebServerApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ClassPathBeanDefinitionScanner;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
@@ -42,11 +42,11 @@ public class TapestryBeanFactoryPostProcessor
         implements BeanFactoryPostProcessor, Ordered {
 
     private static final Logger logger = LoggerFactory.getLogger(TapestryBeanFactoryPostProcessor.class);
-    protected final EmbeddedWebApplicationContext applicationContext;
+    protected final ConfigurableWebServerApplicationContext applicationContext;
     private Registry registry = null;
     private TapestryAppInitializer appInitializer = null;
 
-    public TapestryBeanFactoryPostProcessor(EmbeddedWebApplicationContext applicationContext) {
+    public TapestryBeanFactoryPostProcessor(ConfigurableWebServerApplicationContext applicationContext) {
         super();
         this.applicationContext = applicationContext;
     }
@@ -110,7 +110,18 @@ public class TapestryBeanFactoryPostProcessor
 
         tapestryContext.put("tapestry.filter-name", filterName);
 
-        String servletContextPath = environment.getProperty(SymbolConstants.CONTEXT_PATH, "");
+        String servletContextPath;
+        
+        if (environment.containsProperty("server.servlet.context-path")) {
+            servletContextPath = environment.getProperty("server.servlet.context-path");
+        } else if (environment.containsProperty("server.context-path")) {
+            servletContextPath = environment.getProperty("server.context-path");
+        } else if (environment.containsProperty(SymbolConstants.CONTEXT_PATH)) {
+            servletContextPath = environment.getProperty(SymbolConstants.CONTEXT_PATH);
+        } else {
+            servletContextPath = "";
+        }
+        
         tapestryContext.put(SymbolConstants.CONTEXT_PATH, servletContextPath);
 
         String executionMode = environment.getProperty(SymbolConstants.EXECUTION_MODE, "production");

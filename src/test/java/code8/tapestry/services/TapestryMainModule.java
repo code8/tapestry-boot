@@ -1,7 +1,8 @@
 package code8.tapestry.services;
 
-import info.code8.tapestry.TapestryApplication;
 import org.apache.tapestry5.ioc.ServiceBinder;
+
+import info.code8.tapestry.TapestryApplication;
 
 /**
  * Created by code8 on 12/10/15.
